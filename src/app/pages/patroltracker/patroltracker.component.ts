@@ -344,7 +344,8 @@ isSettings:boolean=false;
       
       this.timerMarker.unsubscribe();
     }
-    this.router.navigate(['./pages/feedback']);
+    
+    window.location.href="https://staging.racv.com.au/cb-test/track-my-patrol.appview.html";
   }
 
   timer:Subscription;
