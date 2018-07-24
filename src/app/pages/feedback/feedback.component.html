@@ -1,0 +1,40 @@
+<!-- <form class="feedback-form" [formGroup]="rForm" (ngSubmit)="openBottomSheet(rForm.value)">
+  <div class="content" fxLayout="row" fxLayoutAlign="center">
+    <mat-card class="feedback-card" fxFlex="90%" fxFlex.gt-md="60%" fxFlex.gt-sm="90%">
+      <mat-card-content>
+        <div class="gap">
+          <b>Please take a moment to review our portal tracking services:</b>
+
+        </div>
+        <div class="gap50">Did you like using 'Track my patrol' feature?</div>
+
+        <div fxLayout="row" fxLayoutAlign="center" class="gap">
+          <mat-button-toggle-group fxFlex="90%" fxFlex.gt-md="50%" fxFlex.gt-xs="40%" #group="matButtonToggleGroup" formControlName="togglerValue" (change)="textAreaToggler(group.value)">
+            <mat-button-toggle value="yes" [checked]="true" fxFlex="100%" fxLayoutAlign="center">
+              <b>Yes</b>
+            </mat-button-toggle>
+            <mat-button-toggle value="no" fxFlex="100%" fxLayoutAlign="center">
+              <b>No</b>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="gap" *ngIf="enableTextArea">
+          <div> If no, how come?</div>
+          <div>
+            <textarea class="gap10" placeholder="Leave a comment" formControlName="comment"></textarea>
+          </div>
+         
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="footer btn-color" fxLayout="column" fxLayoutAlign="end stretch">
+    <button type="submit" mat-raised-button color="primary">Submit</button>
+  </div>
+</form>
+
+     -->
+     <div class="content" fxLayout="row" fxLayoutAlign="center center" *ngIf="isLoading">
+      <mat-progress-spinner [diameter]="50" mode="indeterminate" [strokeWidth]="6"></mat-progress-spinner>
+  </div>

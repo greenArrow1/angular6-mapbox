@@ -1,0 +1,94 @@
+:host, .mapContent {
+  display: flex;
+  -ms-flex: 1;
+  flex: 1;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  height: calc(100vh - 100px);
+  position: fixed;
+  top: 50px;
+  width: 100%;
+}
+mgl-map {
+  height: 100%;
+  width: 100%;
+}
+.marker{
+  width:52px;
+  height:62px;
+  background-position: 0 0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  margin-bottom: 52px;
+  -border-radius: 5px;
+
+}
+.markersource{
+  width:46px;
+  height:46px;
+  margin-bottom: 46px;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  color: black;
+  text-align: center;
+  height:50px;
+  box-shadow: 1px 3px 4px 5px grey;
+}
+.settings{
+  position: fixed;
+  right: 10px;
+  top: 60px;
+  width: 100px;
+  background-color: white;
+  color: black;
+  text-align: center;
+}
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+ul { 
+  display: block;
+  list-style-type: none;
+  margin-top: 1em;
+  margin-bottom: 1 em;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0px;
+}
+li{
+  border-bottom: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+  user-select: none;
+}
+.direction-input{
+  position: fixed;
+  top: 60px;
+  left: 8px;
+  z-index: 100;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 50%;
+}
+.estimate{
+  background: #0074d9;
+  color: #ffffff;
+}
+
+

@@ -1,0 +1,66 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    height:50px;
+    line-height: 50px;
+  }
+  .feedback-card {
+    display:flex;
+    top:5px;
+   /*  max-width: 400px; */
+    width:100%;
+    margin-bottom: 50px;
+    max-width: 700px;
+    text-align: left;
+    flex-direction: column;
+  }
+  .example-h2 {
+    margin: 10px;
+  }
+  
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .example-margin {
+    margin: 10px;
+  }
+  .feedback-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    text-align: left;
+    margin-top:15vh;
+  }
+  
+  .feedback-full-width {
+    width: 100%;
+  }
+  .mat-button-toggle-checked {
+    color: white;
+    background-color: #00ceff;
+}
+textarea{
+    width:calc(100% - 10px);
+    height:40vh;
+    border: 2px solid #cccccc;
+}
+.alert {
+  background: #f4363669;
+  padding: 7px;
+  font-size: .9em;
+  margin-bottom: 20px;
+  display: inline-block;
+  animation: 2s alertAnim forwards;
+  color:red;
+}
+.example-pizza-party {
+  color: hotpink;
+}

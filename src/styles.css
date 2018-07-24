@@ -1,0 +1,72 @@
+/* Master Styles */
+@import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~mapbox-gl/dist/mapbox-gl.css";
+@import "~@mapbox/mapbox-gl-geocoder/lib/mapbox-gl-geocoder.css";
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+.content {
+  display: flex;
+  height: calc(100vh - 68px);
+  position: fixed;
+  top: 58px;
+  width: 100%;
+  justify-content: center;
+}
+.btn-color{
+  background-color: #0b62c5;
+}
+.mat-button-toggle-label {
+  display: flex;
+  width: 100%;
+  text-align: center;
+
+}
+.mat-button-toggle-label-content {
+  display: flex;
+  width: 100%;
+  text-align: center;
+
+}
+.gap{
+  margin-top:20px;
+}
+.gap10{
+  margin-top:10px;
+}
+.gap50{
+  margin-top:50px;
+}
+.mapboxgl-ctrl-zoom-out, .mapboxgl-ctrl-zoom-in{
+  display: none !important;
+}
+.mapboxgl-ctrl-group{
+  border-radius: 25px;
+  box-shadow: 2px 3px 2px 2px rgba(0,0,0,0.1);
+}
+.mapboxgl-ctrl-group > button {
+  width: 50px !important;
+  height: 50px !important;
+}
+.mapboxgl-ctrl-icon.mapboxgl-ctrl-compass > .mapboxgl-ctrl-compass-arrow {
+  width: 40px !important;
+  height: 40px !important;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E %3Cpolygon fill='%23ff0000' points='6,9 10,1 14,9'/%3E %3Cpolygon fill='%23CCCCCC' points='6,11 10,19 14,11 '/%3E %3C/svg%3E");
+}
+.mapboxgl-ctrl-compass {
+  
+  }
+  .mat-button-focus-overlay {
+     background-color: rgba(0,0,0,0) !important;
+  }
+@media only screen and (max-height: 568px) {
+  .content {
+     /*  min-height: 450px; */
+      overflow: scroll;
+    /*   height: 450px; */
+  }
+}
+

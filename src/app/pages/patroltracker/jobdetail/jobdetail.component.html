@@ -1,0 +1,85 @@
+<div class="content2" fxLayout="row" fxLayoutAlign="center stretch" [@myAnimation]>
+  <mat-card class="feedback-card" fxFlex="100%">
+    <mat-card-header>
+      <!--  <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+
+
+    </mat-card-header>
+    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    <mat-card-content>
+      <p>
+        <!--   The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting. -->
+        You have requested for a RACV patrol van to arrive at:
+        <br>
+        <br>
+        <strong>485, Bourke Street, Melbourne</strong>
+        <br>
+        <br>
+        <br>
+        <br> Your estimated time to arrival is calculated based on various traffic statistics, and may vary based on real-time
+        traffic.
+      </p>
+      <strong style="display: none;">Roadside Assist FAQs</strong>
+    </mat-card-content>
+    <mat-accordion style="display: none;">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Question 1
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>question1 text</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Question 2
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>question2 here</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Question 3
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>question3 text</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Question 4
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>question4 text</p>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Question 5
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>question5 text</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+</div>
+<div class="footer" fxLayout="column" fxLayoutAlign="center center" (click)="goBack($event)">
+  <button class="backButton" mat-button fxFlex="90%" fxFlex.gt-md="60%" fxFlex.gt-sm="90%">
+    <mat-icon>keyboard_backspace</mat-icon>Back</button>
+</div>

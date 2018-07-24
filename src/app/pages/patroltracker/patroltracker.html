@@ -1,0 +1,89 @@
+<!-- <div class="direction-input">
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Source" value="Lang" [(ngModel)]="sourceLang" name="source">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="lat" value="Lat" [(ngModel)]="sourceLat" name="source">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Destination" value="Lang" [(ngModel)]="destinationLang" name="destinationLang">
+        </mat-form-field>
+            <mat-form-field class="example-full-width">
+            <input matInput placeholder="lat" value="Lat]" [(ngModel)]="destinationLat" name="destinationLat">
+        </mat-form-field>
+    </form>
+    <div class="button-row">
+            <button mat-mini-fab color="primary" (click)="getRoute()">OK</button>
+    </div> 
+</div>-->
+<section class="mapContent" *ngIf="!isLoading">
+    <mgl-map id="map" [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [centerWithPanTo]="true"
+        [pitch]="pitch" movingMethod="jumpTo" [fitBounds]="bounds" [fitBoundsOptions]="{
+            padding: 50
+          }" [doubleClickZoom]="false" (dblClick)="zoomOndblClick()" (load)="map = $event">
+
+        <mgl-marker id="dest" *ngIf="showMarker" [feature]="destfeature">
+            <!-- <div (click)="onClick(destfeature)" class="markersource" style="background-image: url(../assets/images/descmarker.png);">
+            </div> -->
+            <img (click)="onClick(destfeature)" class="markersource" src="../../../assets/images/descmarker.png">
+            
+        </mgl-marker>
+        <mgl-popup *ngIf="selectedPoint" [lngLat]="destfeature.geometry?.coordinates" [closeOnClick]="false" (close)="popupClose()">
+            {{destfeature.properties.description}}
+        </mgl-popup>
+       
+        <mgl-marker id="source" *ngIf="showMarker" [feature]="feature">
+            <!-- [ngStyle]="rotateMarker" -->
+            <div class="marker"  style="background-image: url(../assets/images/Van1x.png);">
+            </div>
+        </mgl-marker>
+
+
+        <mgl-geojson-source *ngIf="data" id="trace" [data]="data">
+        </mgl-geojson-source>
+        <mgl-geojson-source *ngIf="routes" id="traceMarker" [data]="routes">
+        </mgl-geojson-source>
+        <mgl-layer *ngIf="data" id="trace" type="line" source="trace" [paint]="paint">
+        </mgl-layer>
+        <mgl-layer *ngIf="routes" id="traceMarker" type="line" source="traceMarker" [paint]="{
+            'line-color': 'gray',
+            'line-opacity': 0,
+            'line-width': 7
+        }">
+        </mgl-layer>
+        <mgl-control
+        mglNavigation position='top-right'
+      ></mgl-control>
+    </mgl-map>
+</section>
+<div class="content" fxLayout="row" fxLayoutAlign="center center" *ngIf="isLoading">
+    <mat-progress-spinner [diameter]="50" mode="indeterminate" [strokeWidth]="6"></mat-progress-spinner>
+</div>
+<div class="settings" style="display:none;">
+        <div (click)="openSettings()">
+                <button type="button" mat-raised-button color="primary" fxFlex="100%">Settings</button>
+        </div>
+        
+        <div id="demo" class="collapse" *ngIf="isSettings">
+         <ul >
+             <li (click)="setOption('routepath',0.75)">Show Route</li>
+             <li (click)="setOption('routepath',0)">Hide Route</li>
+             <li (click)="setOption('destination',0.75)">Destination</li>
+             <li (click)="setOption('source',0)">Source</li>
+             <li (click)="setOption('zoom',0)">Reset Zoom</li>
+             </ul>
+        </div>
+    </div>
+
+<div class="footer" (click)="openBottomSheet()" fxLayout="row" fxLayoutAlign="none none" *ngIf="!isLoading">
+    <div fxLayout="row" fxLayoutAlign="center center" fxFlex="80">
+        <strong> Estimated Travel Time :</strong>
+    </div>
+    <div class="estimate" fxLayout="row" fxLayoutAlign="center center" fxFlex="20">
+        <strong> {{estimatedTime}} min</strong>
+    </div>
+</div>
+<div *ngIf="details">
+    <app-jobdetail (closeChildWindow)="hideChildWindow(status)"></app-jobdetail>
+</div>
