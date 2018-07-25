@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Langlat } from '../langlat';
 import { Observable } from 'rxjs';
 
@@ -32,10 +32,23 @@ export class PatrolTrackerService {
         return this.http.post<any>('/api/feedback',formData);
     }
     getBreakDownDetails(jobid:string):Observable<any>{
+        debugger
         return this.http.get('/api/details/'+jobid);
     }
     getPatrolLocation(index:number):Observable<any>{
         return this.http.get('/api/location/'+index);
     }
-
+    // reverseGeocoading(){
+    //     return this.http.get('https://api.mapbox.com/v4/geocode/mapbox.places/144.9824198,-37.85566.json?access_token='+environment.accessTokenMapbox);
+    // }
+    getDataFromAPI(){
+        var header = new HttpHeaders();
+        header.set('Content-Type','application/json');
+        header.append('Accept', 'application/json');
+        header.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE, PUT');
+        header.append('Access-Control-Allow-Origin', '*');
+        header.append('Access-Control-Allow-Headers', "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding");
+       
+        return this.http.get('https://800be087.ngrok.io/details?key1=51634446',{headers:header });
+    }
 }

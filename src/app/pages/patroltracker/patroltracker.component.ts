@@ -163,6 +163,9 @@ isSettings:boolean=false;
   }
   bounds:any = [[145.180533,-37.952297], [144.959936, -37.815563]]
   ngOnInit() {
+
+
+    
     if (this.patrolservice.validateLink(this.activeRoute.snapshot.params.jobid) == 1) {
       this.storeToken();
       if(this.sourceLang =="" || !this.sourceLang){
