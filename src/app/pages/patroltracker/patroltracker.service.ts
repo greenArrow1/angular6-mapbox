@@ -28,11 +28,9 @@ export class PatrolTrackerService {
         return 0;
     }
     sendFeedback(formData:any){
-        debugger
         return this.http.post<any>('/api/feedback',formData);
     }
     getBreakDownDetails(jobid:string):Observable<any>{
-        debugger
         return this.http.get('/api/details/'+jobid);
     }
     getPatrolLocation(index:number):Observable<any>{

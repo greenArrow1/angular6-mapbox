@@ -306,6 +306,7 @@ isSettings:boolean=false;
       this.center = [this.data.features[0].geometry.coordinates[0][0], this.data.features[0].geometry.coordinates[0][1]];
     }
     if(key == 'zoom'){
+      this.pitch=30;
       this.zoomToBounds();
     }
   }

@@ -28,7 +28,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             request.url.endsWith("/api/tokenauthenticate") &&
             request.method === "POST"
           ) {
-            debugger;
+            
             let filteredPs = patrolservice.filter(ps => {
               return ps.token === request.body.tocken;
             });
