@@ -36,3 +36,8 @@
     width: 100%;
     justify-content: center;
   }
+  svg {
+    height: 30%;
+    width: 10%;
+    fill: white;
+}

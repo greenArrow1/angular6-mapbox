@@ -462,7 +462,8 @@ isSettings:boolean=false;
     //     this.map.setZoom(zoomLevel);
     //   });
     // }
-    this.elRef.nativeElement.querySelector('.mapboxgl-ctrl-zoom-out').click();
+    //this.elRef.nativeElement.querySelector('.mapboxgl-ctrl-zoom-out').click();
+    this.zoomToBounds();
 
   }
   hideChildWindow(status) {
