@@ -13,9 +13,12 @@ export class Home implements OnInit {
   ngOnInit() {
     console.log("hello");
     // Just to make sure `auth_token` is clear when, landed on this page
-    let errorData = JSON.parse(sessionStorage.getItem('error'))
-     this.errorMessage = errorData.message;
+    let errorData = JSON.parse(sessionStorage.getItem('error'));
+    if(errorData){
+      this.errorMessage = errorData.message;
      this.errorStatus = errorData.status;
+    }
+     
   }
   
 }

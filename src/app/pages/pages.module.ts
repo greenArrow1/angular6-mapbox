@@ -9,6 +9,7 @@ import { GreetingsComponent } from './greetings/greetings.component';
 import {FooterComponent} from '../shared/components/footer/footer.component';
 import {NotificationComponent} from '../shared/directives/notification/notification.directive';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
 @NgModule({
   imports: [CommonModule, AppRoutingModule,SharedModule],
   declarations: [Pages,HeaderComponent,GreetingsComponent,FooterComponent,NotificationComponent],

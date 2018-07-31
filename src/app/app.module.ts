@@ -14,6 +14,7 @@ import { PatrolTrackerService } from './pages/patroltracker/patroltracker.servic
 import { AuthGuard } from './guards/auth.guard';
 import { fakeBackendProvider } from './helpers/fake.backend';
 import { CustomErrorHandler } from './CustomErrorHandler';
+import { WindowRef } from './shared/services/window.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { CustomErrorHandler } from './CustomErrorHandler';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-  },fakeBackendProvider],
+  },fakeBackendProvider,WindowRef],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

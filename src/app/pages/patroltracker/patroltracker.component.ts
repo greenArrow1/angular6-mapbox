@@ -12,6 +12,7 @@ import { PolyLineService } from './polyline.service';
 import { SharedModule } from '../../shared/shared.module';
 import { log } from 'util';
 import { parse } from 'url';
+import { WindowRef } from '../../shared/services/window.service';
 declare var turf: any; //importing turf library features in variable turf.
 
 
@@ -56,9 +57,9 @@ isSettings:boolean=false;
   zoom = [0];
   pitch: number;
   paint:any = {
-    'line-color': 'blue',
-    'line-opacity': 0.75,
-    'line-width': 1
+    'line-color': '#0099FF',
+    'line-opacity': 0.80,
+    'line-width': 5
 };
 /**
  * plotting and altering marker
@@ -132,7 +133,7 @@ isSettings:boolean=false;
     public bottomSheet: MatBottomSheet,
     private patrolservice: PatrolTrackerService,
     private PolyLineService: PolyLineService,
-    public ngZone: NgZone,changeDetectorRef: ChangeDetectorRef) {
+    public ngZone: NgZone,changeDetectorRef: ChangeDetectorRef, public windowRef: WindowRef) {
       this.changeDetectorRef = changeDetectorRef;
      
   }
@@ -159,7 +160,7 @@ isSettings:boolean=false;
     this.options = {
       "coords": { startLang: this.sourceLang, startLat: this.sourceLat, endLang: this.destinationLang, endLat: this.destinationLat }
     }
-    this.ngOnInit();
+   //this.ngOnInit();
   }
   bounds:any = [[145.180533,-37.952297], [144.959936, -37.815563]]
   ngOnInit() {
@@ -196,6 +197,9 @@ isSettings:boolean=false;
           this.center = [this.options.coords.endLang, this.options.coords.endLat];
           
           this.bounds = [[145.180533,-37.952297], [144.959936, -37.815563]];
+          
+  
+  
           this.timerMarker = interval(6000, animationFrameScheduler).subscribe(() => {
             this.index++;
             if (this.index == coords.length - 1 || this.options.coords.startLang == 0 || this.options.coords.startLat == 0 || this.options.coords.endLang == 0 || this.options.coords.endLat == 0) {
@@ -226,6 +230,7 @@ isSettings:boolean=false;
       response.routes[0].geometry = this.PolyLineService.toGeoJSON(response.routes[0].geometry, 5);
       this.featureCollection.features = response.routes;
       const data: GeoJSON.FeatureCollection<GeoJSON.LineString> = <any>this.featureCollection;
+      this.data = Object.assign({}, data);
       const routes: any = {
         "type": "FeatureCollection",
         "features": [{
@@ -240,20 +245,20 @@ isSettings:boolean=false;
         }]
     };
     
-      const coordinates = data.features[0].geometry.coordinates;
-      this.coords = data.features[0].geometry.coordinates;
+      const coordinates = this.data.features[0].geometry.coordinates;
+      this.coords = this.data.features[0].geometry.coordinates;
       routes.features[0].geometry.coordinates[0]=this.coords[0];
       routes.features[0].geometry.coordinates[1]=this.coords[1];
       this.routes = JSON.parse(JSON.stringify(routes));
      /**
       * angel calculates the rotation angle.
       */
-      var angel: string = this.trunBasedOnBearing2(data);//this.trunBasedOnBearing(response.routes[0].legs[0].steps,coordinates[0]);
+      var angel: string = this.trunBasedOnBearing2(this.data);//this.trunBasedOnBearing(response.routes[0].legs[0].steps,coordinates[0]);
       this.rotateMarker["-ms-transform"] = angel;
       this.rotateMarker["-webkit-transform"] = angel;
       this.rotateMarker.transform = angel;
       this.rotateMarker = Object.assign({}, this.rotateMarker);
-      this.data = Object.assign({}, data);
+     
       if (this.index == 0) {
         localStorage.setItem('coords', JSON.stringify(coordinates));
         this.zoomToBounds();
@@ -370,6 +375,7 @@ isSettings:boolean=false;
           arc.push(segment.geometry.coordinates);
       }
       // Update the route with calculated arc coordinates
+      
       this.routes.features[0].geometry.coordinates =[];
       this.routes.features[0].geometry.coordinates = arc;
      
@@ -397,7 +403,10 @@ isSettings:boolean=false;
               }
             };
             feature.geometry.coordinates = this.routes.features[0].geometry.coordinates[i];
-            this.feature = JSON.parse(JSON.stringify(feature));
+            setTimeout(() => {
+              this.feature = JSON.parse(JSON.stringify(feature));
+            }, 1000);
+            
           }
           i++;
         }
@@ -447,6 +456,20 @@ isSettings:boolean=false;
     this.req2.unsubscribe();
     this.req.unsubscribe();
   }
+  ngAfterViewInit() {
+  this.ngZone.runOutsideAngular(()=>{
+   this.windowRef.nativeWindow.digitalData = {
+    page: {
+    pageName: "pages/patroltracker", // set page name 
+    siteSection: " relaxed-meninsky-dd0ec4.netlify ", // set domain/sub-domain name
+    server: "relaxed-meninsky-dd0ec4.netlify.com" // set domain/sub-domain name
+    },
+    };
+    this.windowRef.nativeWindow._satellite.pageBottom();
+    //console.log("adobe" + window._satellite.pageBottom());
+    //this.$carousel = $(this.el.nativeElement).slick({});
+  });
+}
   /**
    * open side setting toolbox.
    * user can show/hide the route on/from map.
