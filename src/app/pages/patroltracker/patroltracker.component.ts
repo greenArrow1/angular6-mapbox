@@ -392,14 +392,14 @@ isSettings:boolean=false;
       // Update the route with calculated arc coordinates
       this.routes.features[0].geometry.coordinates =[];
       this.routes.features[0].geometry.coordinates = arc;
-      
+      /* 
       for(let i=0 ; i<=this.data.features[0].geometry.coordinates.length;i++){
         if(arc[i]  && this.data.features[0].geometry.coordinates[i][0] == arc[i][0] && this.data.features[0].geometry.coordinates[i][1] == arc[i][1]){
           this.data.features[0].geometry.coordinates.splice(i,1);
           //console.log(i);
         }
         
-      }
+      } */
 
 
       var i=0;
