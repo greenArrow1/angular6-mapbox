@@ -18,8 +18,8 @@
     </div> 
 </div>-->
 <section class="mapContent" *ngIf="!isLoading">
-    <mgl-map id="map" [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [centerWithPanTo]="true"
-        [pitch]="pitch" movingMethod="jumpTo" [fitBounds]="bounds" [fitBoundsOptions]="{
+    <mgl-map id="map" [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [centerWithPanTo]="true" [pitch]="pitch"
+        movingMethod="jumpTo" [fitBounds]="bounds" [fitBoundsOptions]="{
             padding: 50
           }" [doubleClickZoom]="false" (dblClick)="zoomOndblClick()" (load)="map = $event">
 
@@ -27,15 +27,15 @@
             <!-- <div (click)="onClick(destfeature)" class="markersource" style="background-image: url(../assets/images/descmarker.png);">
             </div> -->
             <img (click)="onClick(destfeature)" class="markersource" src="../../../assets/images/descmarker.png">
-            
+
         </mgl-marker>
         <mgl-popup *ngIf="selectedPoint" [lngLat]="destfeature.geometry?.coordinates" [closeOnClick]="false" (close)="popupClose()">
             {{destfeature.properties.description}}
         </mgl-popup>
-       
+
         <mgl-marker id="source" *ngIf="showMarker" [feature]="feature">
             <!-- [ngStyle]="rotateMarker" -->
-            <div class="marker"  style="background-image: url(../assets/images/Van3x.png);">
+            <div class="marker" style="background-image: url(../assets/images/Van3x.png);">
             </div>
         </mgl-marker>
 
@@ -52,37 +52,42 @@
             'line-width': 7
         }">
         </mgl-layer>
-        <mgl-control
-        mglNavigation position='top-right'
-      ></mgl-control>
+        <mgl-control mglNavigation position='top-right'></mgl-control>
     </mgl-map>
 </section>
 <div class="content" fxLayout="row" fxLayoutAlign="center center" *ngIf="isLoading">
     <mat-progress-spinner [diameter]="50" mode="indeterminate" [strokeWidth]="6"></mat-progress-spinner>
 </div>
+<div class="settings">
+        <button mat-raised-button (click)="openDialog()">Pick one</button>
+    </div>
 <div class="settings" style="display:none;">
-        <div (click)="openSettings()">
-                <button type="button" mat-raised-button color="primary" fxFlex="100%">Settings</button>
-        </div>
-        
-        <div id="demo" class="collapse" *ngIf="isSettings">
-         <ul >
-             <li (click)="setOption('routepath',0.75)">Show Route</li>
-             <li (click)="setOption('routepath',0)">Hide Route</li>
-             <li (click)="setOption('destination',0.75)">Destination</li>
-             <li (click)="setOption('source',0)">Source</li>
-             <li (click)="setOption('zoom',0)">Reset Zoom</li>
-             </ul>
-        </div>
+    <div (click)="openSettings()">
+        <button type="button" mat-raised-button color="primary" fxFlex="100%">Settings</button>
     </div>
 
-<div class="footer"  fxLayout="row" fxLayoutAlign="none none" *ngIf="!isLoading" (click)="openBottomSheet()" style="cursor: pointer;">
+    <div id="demo" class="collapse" *ngIf="isSettings">
+        <ul>
+            <li (click)="setOption('routepath',0.75)">Show Route</li>
+            <li (click)="setOption('routepath',0)">Hide Route</li>
+            <li (click)="setOption('destination',0.75)">Destination</li>
+            <li (click)="setOption('source',0)">Source</li>
+            <li (click)="setOption('zoom',0)">Reset Zoom</li>
+        </ul>
+    </div>
+</div>
+
+<div class="footer" fxLayout="row" fxLayoutAlign="none none" *ngIf="!isLoading" (click)="openBottomSheet()" style="cursor: pointer;">
     <div fxLayout="row" fxLayoutAlign="center center" fxFlex="80">
-        <strong> Estimated Travel Time :</strong><span><mat-icon  style="vertical-align: middle;">help</mat-icon></span>
+        <strong> Estimated Travel Time :</strong>
+        <span>
+            <mat-icon style="vertical-align: middle;" >help</mat-icon>
+        </span>
     </div>
     <div class="estimate" fxLayout="row" fxLayoutAlign="center center" fxFlex="20">
         <strong> {{estimatedTime}} min</strong>
     </div>
+    
 </div>
 <div *ngIf="details">
     <app-jobdetail (closeChildWindow)="hideChildWindow(status)"></app-jobdetail>

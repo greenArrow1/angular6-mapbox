@@ -162,12 +162,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               return throwError("Unauthorised");
             }
           }
-          if (
+       /*    if (
             request.url === "https://800be087.ngrok.io/details?key1=51634446" &&
             request.method === "GET"
           ) {
             console.log("backend passed");
-          }
+          } */
 
           return next.handle(request);
         })

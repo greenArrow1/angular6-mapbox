@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AuthGuard } from '../guards/auth.guard';
 
 import { GreetingsComponent } from './greetings/greetings.component';
+
 // noinspection TypeScriptValidateTypes
 
 // export function loadChildren(path) { return System.import(path); };
@@ -24,8 +25,7 @@ export const routes: Routes = [
       },
       { path: 'greetings',  component:GreetingsComponent,canActivate:[AuthGuard]
       }
-
-    ]
+    ],
   },
 ];
 

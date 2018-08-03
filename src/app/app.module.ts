@@ -13,12 +13,16 @@ import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { PatrolTrackerService } from './pages/patroltracker/patroltracker.service';
 import { AuthGuard } from './guards/auth.guard';
 import { fakeBackendProvider } from './helpers/fake.backend';
-import { CustomErrorHandler } from './CustomErrorHandler';
+//import { CustomErrorHandler } from './CustomErrorHandler';
 import { WindowRef } from './shared/services/window.service';
-
+//import { GlobalErrorHandlerService } from './global-error-handler.service';
+// import { GlobalErrorComponent }  from './global-error.component';
+// import { PageNotFoundComponent }  from './page-not-found.component';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    // GlobalErrorComponent,
+		// PageNotFoundComponent
     
   ],
   imports: [
@@ -31,7 +35,7 @@ import { WindowRef } from './shared/services/window.service';
     ReactiveFormsModule
    
   ],
-  providers: [AuthGuard,GlobalState, {provide: ErrorHandler, useClass: CustomErrorHandler},
+  providers: [AuthGuard,GlobalState, //{provide: ErrorHandler, useClass: CustomErrorHandler},
   //{provide: HTTP_INTERCEPTORS, useClass: ProgressInterceptor, multi: true, deps: [ProgressBarService]},
   {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true},
   PatrolTrackerService,
@@ -39,7 +43,8 @@ import { WindowRef } from './shared/services/window.service';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-  },fakeBackendProvider,WindowRef],
+  },fakeBackendProvider,WindowRef,//GlobalErrorHandlerService,{ provide: ErrorHandler, useClass: GlobalErrorHandlerService }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

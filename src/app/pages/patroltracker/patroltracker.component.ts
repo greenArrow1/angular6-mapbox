@@ -1,20 +1,26 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone, ElementRef, ViewChild } from '@angular/core';
 import { LngLatLike, LngLatBounds,Map} from 'mapbox-gl';
 import { HttpClient } from '@angular/common/http';
-import { MatBottomSheet, ICON_REGISTRY_PROVIDER_FACTORY } from '@angular/material';
+import { MatBottomSheet, ICON_REGISTRY_PROVIDER_FACTORY,MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { JobdetailComponent } from './jobdetail/jobdetail.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PatrolTrackerService } from './patroltracker.service';
 import { FeatureCollection } from '@turf/helpers';
-import { interval, Subscription, } from 'rxjs';
+import { interval, Subscription, throwError, } from 'rxjs';
 import { animationFrameScheduler } from 'rxjs';
 import { PolyLineService } from './polyline.service';
 import { SharedModule } from '../../shared/shared.module';
 import { log } from 'util';
 import { parse } from 'url';
 import { WindowRef } from '../../shared/services/window.service';
+import { LoggerService } from '../../shared/services/logger.service';
+import { Dialog } from './dialog/dialog.component';
 declare var turf: any; //importing turf library features in variable turf.
 
+export interface DialogData {
+  animal: string;
+  name: string;
+}
 
 @Component({
   selector: 'patroltracker',
@@ -22,6 +28,8 @@ declare var turf: any; //importing turf library features in variable turf.
   styleUrls: ['./patroltracker.css']
 })
 export class PatrolTrackerComponent implements OnInit, OnDestroy {
+  animal: string;
+  name: string;
   state:any;
   isLoading:boolean=true;
   map:Map;
@@ -47,6 +55,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
         }
     }]
 };
+
 
 /**
  * plotting route on map
@@ -133,10 +142,11 @@ isSettings:boolean=false;
     public bottomSheet: MatBottomSheet,
     private patrolservice: PatrolTrackerService,
     private PolyLineService: PolyLineService,
-    public ngZone: NgZone,changeDetectorRef: ChangeDetectorRef, public windowRef: WindowRef) {
+    public ngZone: NgZone,changeDetectorRef: ChangeDetectorRef, public windowRef: WindowRef,public dialog: MatDialog) {
       this.changeDetectorRef = changeDetectorRef;
      
   }
+ 
   //  ngAfterViewInit() {
   //    this.elRef.nativeElement.querySelector('.mapboxgl-ctrl-zoom-out');
   //  }
@@ -231,6 +241,7 @@ isSettings:boolean=false;
       this.featureCollection.features = response.routes;
       const data: GeoJSON.FeatureCollection<GeoJSON.LineString> = <any>this.featureCollection;
       this.data = Object.assign({}, data);
+      //throw new Error('This request has failed '); 
       const routes: any = {
         "type": "FeatureCollection",
         "features": [{
@@ -277,6 +288,10 @@ isSettings:boolean=false;
         //this.zoomToBounds();
         this.createRoutes(this.options.coords);
       });
+    },err => {
+      console.log(err);
+      LoggerService.setError(err);
+      this.router.navigate(["/home"]);
     });
   }
   /**
@@ -302,7 +317,7 @@ isSettings:boolean=false;
         'line-opacity': value,
         'line-width': 7
     })
-    console.log("----------------- ",key,value);
+    //console.log("----------------- ",key,value);
     }
     if(key=='destination') {
       this.center = [this.options.coords.endLang, this.options.coords.endLat];
@@ -362,7 +377,7 @@ isSettings:boolean=false;
     
     var lineDistance = turf.lineDistance(this.routes.features[0], 'kilometers');
 
-      let arc = [];
+      var arc = [];
 
       // Number of steps to use in the arc and animation, more steps means
       // a smoother arc and animation, but too many steps will result in a
@@ -375,10 +390,18 @@ isSettings:boolean=false;
           arc.push(segment.geometry.coordinates);
       }
       // Update the route with calculated arc coordinates
-      
       this.routes.features[0].geometry.coordinates =[];
       this.routes.features[0].geometry.coordinates = arc;
-     
+      
+      for(let i=0 ; i<=this.data.features[0].geometry.coordinates.length;i++){
+        if(arc[i]  && this.data.features[0].geometry.coordinates[i][0] == arc[i][0] && this.data.features[0].geometry.coordinates[i][1] == arc[i][1]){
+          this.data.features[0].geometry.coordinates.splice(i,1);
+          //console.log(i);
+        }
+        
+      }
+
+
       var i=0;
       if(this.timer){
         this.timer.unsubscribe();
@@ -402,10 +425,12 @@ isSettings:boolean=false;
                 ]
               }
             };
+            
             feature.geometry.coordinates = this.routes.features[0].geometry.coordinates[i];
-            setTimeout(() => {
+            
+            //setTimeout(() => {
               this.feature = JSON.parse(JSON.stringify(feature));
-            }, 1000);
+           // }, 1550);
             
           }
           i++;
@@ -453,7 +478,8 @@ isSettings:boolean=false;
     this.timerMarker.unsubscribe();
     this.req4.unsubscribe();
     this.req3.unsubscribe();
-    this.req2.unsubscribe();
+    if(this.req2){this.req2.unsubscribe();}
+    
     this.req.unsubscribe();
   }
   ngAfterViewInit() {
@@ -496,5 +522,18 @@ isSettings:boolean=false;
     this.state = 'leave';
     this.details = status;
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(Dialog, {
+      width: '300px',
+      data: { name: this.name, animal: this.animal }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
+  }
+
+  
 }
 

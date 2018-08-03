@@ -1,82 +1,82 @@
 <div class="content2" fxLayout="row" fxLayoutAlign="center stretch" [@myAnimation]>
-  <mat-card class="feedback-card" fxFlex="100%" fxLayout="row" fxLayoutAlign="center start">
+  <mat-card class="feedback-card">
     <mat-card-header>
-      <!--  <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
-
-
     </mat-card-header>
-    <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
+    
     <mat-card-content>
       <div>
-        <!--   The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting. -->
         You have requested for a RACV Patrol van to arrive at:
         <br>
         <br>
-        <div class="u-proxima-nova-xlarge" fxLayout="row" fxLayoutAlign="center center">
-        485, Bourke Street, Melbourne</div>
+        <div class="u-proxima-nova-xlarge" fxLayout="column" fxLayoutAlign="space-evenly center">
+          485, Bourke Street, Melbourne</div>
         <br>
-        
-        <br> <div class="u-xsmall-caps">Your estimated time to arrival is calculated based on various traffic statistics, and may vary based on real-time
-        traffic.</div>
+
+        <br>
+        <div class="u-xsmall-caps">Your estimated time to arrival is calculated based on various traffic statistics, and may vary based on real-time
+          traffic.
         </div>
-      <strong style="display: none;">Roadside Assist FAQs</strong>
+      </div>
+    
     </mat-card-content>
-    <mat-accordion style="display: none;">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Question 1
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>question1 text</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Question 2
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>question2 here</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Question 3
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>question3 text</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Question 4
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>question4 text</p>
-      </mat-expansion-panel>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Question 5
-          </mat-panel-title>
-          <mat-panel-description>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <p>question5 text</p>
-      </mat-expansion-panel>
-    </mat-accordion>
+      
+    <div class="faqHeader" fxLayout="column" fxLayoutAlign="space-evenly center">
+        <strong>Roadside Assist FAQs</strong>
+      </div>
+      <div class="faqHeader" fxLayout="column" fxLayoutAlign="space-evenly center">
+          <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                   <h4>How does my ETA work?</h4>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+            <p>
+              Your webpage will continually update our RACV Patrol’s Estimated Time of Arrival (ETA) for the breakdown location. Please note that ETA times are estimates, a variety of external factors like heavy traffic or road construction can impact travel time.
+            </p>
+              </mat-expansion-panel>
+              <mat-expansion-panel (opened)="panelOpenState = true"
+                                   (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h4>What can I do if the address above is incorrect?</h4>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                   
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>The breakdown location is usually accurate, but on occasions it can be an estimate based on the information you have provided. Please wait until your RACV Patrol arrives in the area to assist you further.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel (opened)="panelOpenState = true"
+                                   (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                      <h4>What can I do if the tracking is not functioning properly?</h4>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                   
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>This may be due to a couple reasons regarding your phone network and compatibility or the live tracking server feed being interrupted. Please refer to the previous ETA stated in the text message.</p>
+              </mat-expansion-panel>
+              <mat-expansion-panel (opened)="panelOpenState = true"
+                                   (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <h4>How do I provide feedback?</h4>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                   
+                  </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>There will be a follow up available after the service is completed, you will be able to provide your review and any comments on how we can improve the live tracking service for our members.</p>
+              </mat-expansion-panel>
+            </mat-accordion>
+            
+        </div>
   </mat-card>
 </div>
 <!-- <div class="footer" fxLayout="column" fxLayoutAlign="center center" (click)="goBack($event)">
@@ -85,6 +85,8 @@
 </div> -->
 <div class="footer" fxLayout="column" fxLayoutAlign="center center" (click)="goBack($event)">
   <button class="backButton" mat-button fxFlex="90%" fxFlex.gt-md="60%" fxFlex.gt-sm="90%">
-    <svg viewBox="-200 -200 500 500" id="icon-arrow-left" width="1%" height="1%"><path d="M72 206.6L-37.6 97.1h290.1c26.5 0 47.5-21.5 47.5-47.5 0-26.5-21.5-47.5-47.5-47.5H-37.6l109-109c9.5-9.5 14-21.5 14-33.5s-4.5-24.5-14-33.5c-18.5-18.5-48.5-18.5-67.5 0l-190 190c-19.5 20-17.5 50 0 67.5L4.4 274.2c18.5 18.5 48.5 18.5 67.5 0 18.6-19.1 18.6-49.1.1-67.6z"></path></svg>
-BACK</button>
+    <svg viewBox="-200 -200 500 500" id="icon-arrow-left" width="1%" height="1%">
+      <path d="M72 206.6L-37.6 97.1h290.1c26.5 0 47.5-21.5 47.5-47.5 0-26.5-21.5-47.5-47.5-47.5H-37.6l109-109c9.5-9.5 14-21.5 14-33.5s-4.5-24.5-14-33.5c-18.5-18.5-48.5-18.5-67.5 0l-190 190c-19.5 20-17.5 50 0 67.5L4.4 274.2c18.5 18.5 48.5 18.5 67.5 0 18.6-19.1 18.6-49.1.1-67.6z"></path>
+    </svg>
+    BACK</button>
 </div>

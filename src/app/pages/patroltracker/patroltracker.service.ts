@@ -1,26 +1,44 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Langlat } from '../langlat';
 import { Observable } from 'rxjs';
-
+import { LoggerService } from '../../shared/services/logger.service';
+import { catchError }               from 'rxjs/operators';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class PatrolTrackerService {
    
-    constructor(public http: HttpClient) { }
+    constructor(public http: HttpClient,private injector: Injector) { }
+    private handleError(operation: String) {
+        return (err: any) => {
+          
+            if(err instanceof HttpErrorResponse) {
+                // you could extract more info about the error if you want, e.g.:
+                console.log(`status: ${err.status}, ${err.statusText}`);
+                // errMsg = ...
+            }
+            return Observable.throw(err);
+        }
+    }
     getDirectionRoute(langlat:Langlat):Observable<any>{
         try {
-           return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'.json?geometries=polyline&steps=true&overview=full&access_token='+environment.accessTokenMapbox);
+           return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'.json?geometries=polyline&steps=true&overview=full&access_token='+environment.accessTokenMapbox).pipe(
+        
+            catchError(this.handleError('getData'))
+        );
         } catch (error) {
-            alert(error)
+            //let loggerService = this.injector.get(LoggerService);
+            LoggerService.setError(error);
+            //return error; 
         }
         //145.180533,-37.952297;144.959936,-37.815563?steps=true&geometries=geojson&access_token=pk.eyJ1Ijoid3lra3NzIiwiYSI6ImNqMjR6aTdmdzAwNHMzMnBvbjBucjlqNm8ifQ.6GjGpofWBVaIuSnhdXQb5w
         //return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'?steps=true&geometries=geojson&access_token='+environment.accessTokenMapbox);
        // return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'.json?geometries=polyline&steps=true&overview=full&access_token='+environment.accessTokenMapbox);
     }
     validateLink(params){
-        console.log("-------- ",params);
+        //console.log("-------- ",params);
         if(params){
             return 1;
         }

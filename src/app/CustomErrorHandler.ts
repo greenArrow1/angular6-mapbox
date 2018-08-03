@@ -1,7 +1,7 @@
 import {ErrorHandler} from '@angular/core';
 import {AuthorizationError} from './AuthorizationError';
  
-export class CustomErrorHandler extends ErrorHandler {
+/* export class CustomErrorHandler extends ErrorHandler {
     constructor(){
         super();
     }
@@ -17,4 +17,4 @@ export class CustomErrorHandler extends ErrorHandler {
             //console.error(`this is the error ${error.message.toString()}`)
         }
     }
-}
+} */

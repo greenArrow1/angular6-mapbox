@@ -10,6 +10,7 @@ import { environment } from '../../../environments/environment';
 import { PatrolTrackerService } from './patroltracker.service';
 import { PolyLineService } from './polyline.service';
 import {FormsModule} from '@angular/forms';
+import { Dialog } from './dialog/dialog.component';
 
 
 
@@ -23,9 +24,10 @@ import {FormsModule} from '@angular/forms';
   ],
   declarations: [
     PatrolTrackerComponent,
-    JobdetailComponent
+    JobdetailComponent,
+    Dialog
   ],
   providers: [MatBottomSheet,PatrolTrackerService,PolyLineService],
-  entryComponents: [PatrolTrackerComponent, JobdetailComponent]
+  entryComponents: [PatrolTrackerComponent, JobdetailComponent,Dialog]
 })
 export class PatrolTrackerModule { }
