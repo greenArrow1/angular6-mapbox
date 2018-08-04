@@ -6,9 +6,9 @@
     </mat-card-header>
     <mat-card-content>
      <div>
-        <strong>Error:{{error[0].message}}</strong>
+        <strong>Error:{{error[0]?error[0].message:' '}}</strong>
         <br>
-        <strong>Status : {{error[0].status?error[0].status:''}}</strong>
+        <strong>Status : {{error[0]?error[0].status:''}}</strong>
       </div>
     </mat-card-content>
 

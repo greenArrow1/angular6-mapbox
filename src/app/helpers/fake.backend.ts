@@ -13,7 +13,7 @@ import { delay, mergeMap, materialize, dematerialize } from "rxjs/operators";
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
   constructor() {}
-
+  token:any;
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
@@ -36,7 +36,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               let ps = filteredPs[0];
               let body = {
                 tocken: ps.token,
-                retoken: "51634446"
+                retoken: ps.token
               };
               return of(new HttpResponse({ status: 200, body: body }));
             } else {
@@ -48,7 +48,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             request.url.endsWith("/api/patroledetail") &&
             request.method === "GET"
           ) {
-            if (request.headers.get("Authorization") === "Bearer 51634446") {
+            if (request.headers.get("Authorization") === `Bearer ${sessionStorage.getItem("token")}`) {
+              
               return of(new HttpResponse({ status: 200, body: patrolservice }));
             } else {
               return throwError("Unauthorised");
@@ -58,19 +59,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             request.url.endsWith("/api/feedback") &&
             request.method === "POST"
           ) {
-            if (request.headers.get("Authorization") === "Bearer 51634446") {
+            if (request.headers.get("Authorization") === `Bearer ${sessionStorage.getItem("token")}`) {
               return of(new HttpResponse({ status: 200, body: patrolservice }));
             } else {
               return throwError("Unauthorised");
             }
           }
           if (
-            request.url.match(/\/api\/details\/\d+$/) &&
+            request.url.indexOf('/api/details')> -1 &&
             request.method === "GET"
           ) {
-            if (request.headers.get("Authorization") === "Bearer 51634446") {
+            if (request.headers.get("x-api-key") === patrolservice['token']) {
               let urlParts = request.url.split("/");
-              let id = parseInt(urlParts[urlParts.length - 1]);
+
+              //let id = parseInt(urlParts[urlParts.length - 1]);
               return of(
                 new HttpResponse({
                   status: 200,
@@ -86,13 +88,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           }
 
           if (
-            request.url.match(/\/api\/location\/-1+$/) &&
+            request.url.indexOf('/api/location')> -1 &&
             request.method === "GET"
           ) {
-            if (request.headers.get("Authorization") === "Bearer 51634446") {
+            
+            if (request.headers.get("x-api-key") === patrolservice['token']) {
               let urlParts = request.url.split("/");
-              let id = parseInt(urlParts[urlParts.length - 1]);
-              if (id == -1) {
+             
+              //let id = parseInt(urlParts[urlParts.length - 1]);
+             // if (id == -1) {
                 return of(
                   new HttpResponse({
                     status: 200,
@@ -102,16 +106,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     }
                   })
                 );
-              }
-              return of(
-                new HttpResponse({
-                  status: 200,
-                  body: {
-                    latitude: 0,
-                    longitude: 0
-                  }
-                })
-              );
+              //}
+              // return of(
+              //   new HttpResponse({
+              //     status: 200,
+              //     body: {
+              //       latitude: 0,
+              //       longitude: 0
+              //     }
+              //   })
+              // );
             } else {
               return throwError("Unauthorised");
             }
@@ -120,9 +124,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             request.url.match(/\/api\/location\/\d+$/) &&
             request.method === "GET"
           ) {
+            
             let coords: any[] =
               JSON.parse(localStorage.getItem("coords")) || [];
-            if (request.headers.get("Authorization") === "Bearer 51634446") {
+            if (request.headers.get("Authorization") === `Bearer ${sessionStorage.getItem("token")}`) {
               let urlParts = request.url.split("/");
               let id = parseInt(urlParts[urlParts.length - 1]);
               if (id == -1) {
@@ -162,13 +167,26 @@ export class FakeBackendInterceptor implements HttpInterceptor {
               return throwError("Unauthorised");
             }
           }
-       /*    if (
-            request.url === "https://800be087.ngrok.io/details?key1=51634446" &&
+          if (
+            request.url.includes("/api/location?key1=59777688?key2=9999") &&
             request.method === "GET"
           ) {
-            console.log("backend passed");
-          } */
-
+            //let key1:any =request.url.split("?")[1].split("=")[0];
+            let value1=request.url.split("?")[1].split("=")[1];
+            //let key2:any = request.url.split("?")[2].split("=")[0];
+            let value2:any = request.url.split("?")[2].split("=")[1];
+            return of(
+              new HttpResponse({
+                status: 200,
+                body: {
+                  truckId: value1,
+                  eventId: value2
+                }
+              })
+            );
+           
+          }
+          
           return next.handle(request);
         })
       )

@@ -19,7 +19,7 @@ export const routes: Routes = [
       },
       { path: '',  loadChildren: './home/home.module#HomeModule'
       },
-      { path: 'patroltracker/:jobid',  loadChildren:'./patroltracker/patroltracker.module#PatrolTrackerModule'
+      { path: 'patroltracker/:eventid/:truckid',  loadChildren:'./patroltracker/patroltracker.module#PatrolTrackerModule'
       },
       { path: 'feedback',  loadChildren:'./feedback/feedback.module#FeedbackModule',canActivate:[AuthGuard]
       },

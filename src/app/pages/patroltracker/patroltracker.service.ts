@@ -24,10 +24,8 @@ export class PatrolTrackerService {
     }
     getDirectionRoute(langlat:Langlat):Observable<any>{
         try {
-           return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'.json?geometries=polyline&steps=true&overview=full&access_token='+environment.accessTokenMapbox).pipe(
-        
-            catchError(this.handleError('getData'))
-        );
+           return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'.json?geometries=polyline&steps=true&overview=full&access_token='+environment.accessTokenMapbox)
+           .pipe(catchError(this.handleError('getData')));
         } catch (error) {
             //let loggerService = this.injector.get(LoggerService);
             LoggerService.setError(error);
@@ -37,9 +35,9 @@ export class PatrolTrackerService {
         //return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'?steps=true&geometries=geojson&access_token='+environment.accessTokenMapbox);
        // return this.http.get(environment.directionsURL+langlat.startLang+','+langlat.startLat+';'+langlat.endLang+','+langlat.endLat+'.json?geometries=polyline&steps=true&overview=full&access_token='+environment.accessTokenMapbox);
     }
-    validateLink(params){
+    validateLink(eventid,truckid){
         //console.log("-------- ",params);
-        if(params){
+        if(eventid && truckid){
             return 1;
         }
         sessionStorage.removeItem("patrolservice");
@@ -48,16 +46,33 @@ export class PatrolTrackerService {
     sendFeedback(formData:any){
         return this.http.post<any>('/api/feedback',formData);
     }
-    getBreakDownDetails(jobid:string):Observable<any>{
+   /*  getBreakDownDetails(jobid:string):Observable<any>{
         return this.http.get('/api/details/'+jobid);
     }
     getPatrolLocation(index:number):Observable<any>{
         return this.http.get('/api/location/'+index);
+    } */
+    getBreakDownDetails(eventid:any):Observable<any>{
+        try{
+            return this.http.get(environment.apiurl+'/details?eventid='+eventid).pipe(catchError(this.handleError('getData')));
+        }
+        catch(error){
+
+        }
+       
+    }
+    getPatrolLocation(eventid,truckid):Observable<any>{
+        try{
+            return this.http.get(environment.apiurl+'/location?eventid='+eventid+'?truckid='+truckid).pipe(catchError(this.handleError('getData')));
+        }
+       catch(error){
+
+       }
     }
     // reverseGeocoading(){
     //     return this.http.get('https://api.mapbox.com/v4/geocode/mapbox.places/144.9824198,-37.85566.json?access_token='+environment.accessTokenMapbox);
     // }
-    getDataFromAPI(){
+   /*  getDataFromAPI(){
         var header = new HttpHeaders();
         header.set('Content-Type','application/json');
         header.append('Accept', 'application/json');
@@ -66,5 +81,22 @@ export class PatrolTrackerService {
         header.append('Access-Control-Allow-Headers', "X-Requested-With, Content-Type, Origin, Authorization, Accept, Client-Security-Token, Accept-Encoding");
        
         return this.http.get('https://800be087.ngrok.io/details?key1=51634446',{headers:header });
+    } */
+    /* getDetails(eventid):Observable<any>{
+        try {
+            return this.http.get(environment.apiurl+'/details?eventid='+eventid).pipe(catchError(this.handleError('getData')));
+        } catch (error) {
+            LoggerService.setError(error);
+        }
+        //return this.http.get('/api/details?key1=51553944');
     }
+    getLocation(eventid,truckid):Observable<any>{
+        try{
+            return this.http.get(environment.apiurl+'/location?eventid='+eventid+'?truckid='+truckid).pipe(catchError(this.handleError('getData')));
+        }
+        catch(error){
+            LoggerService.setError(error);
+        }
+        
+    } */
 }

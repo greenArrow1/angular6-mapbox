@@ -9,7 +9,7 @@ export class JwtInterceptor implements HttpInterceptor {
         if (currentPS && currentPS.token) {
             request = request.clone({
                 setHeaders: { 
-                    Authorization: `Bearer ${currentPS.token}`
+                    'x-api-key': `${currentPS.token}`
                 }
             });
         }

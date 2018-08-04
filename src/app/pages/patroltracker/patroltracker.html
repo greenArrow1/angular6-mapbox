@@ -58,9 +58,9 @@
 <div class="content" fxLayout="row" fxLayoutAlign="center center" *ngIf="isLoading">
     <mat-progress-spinner [diameter]="50" mode="indeterminate" [strokeWidth]="6"></mat-progress-spinner>
 </div>
-<div class="settings">
+<!-- <div class="settings">
         <button mat-raised-button (click)="openDialog()">Pick one</button>
-    </div>
+    </div> -->
 <div class="settings" style="display:none;">
     <div (click)="openSettings()">
         <button type="button" mat-raised-button color="primary" fxFlex="100%">Settings</button>
