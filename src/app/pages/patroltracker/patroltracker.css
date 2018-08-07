@@ -87,8 +87,16 @@ li{
   width: 50%;
 }
 .estimate{
-  background: #0074d9;
+  background:#014280 ;
   color: #ffffff;
+}
+.mat-icon {
+  background-repeat: no-repeat;
+  display: inline-block;
+  fill: currentColor;
+  height: 24px;
+  width: 24px;
+  color:lightgrey;
 }
 
 

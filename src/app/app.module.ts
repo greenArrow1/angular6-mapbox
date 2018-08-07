@@ -43,7 +43,7 @@ import { WindowRef } from './shared/services/window.service';
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
       multi: true
-  },fakeBackendProvider,WindowRef,//GlobalErrorHandlerService,{ provide: ErrorHandler, useClass: GlobalErrorHandlerService }
+  },WindowRef,fakeBackendProvider//GlobalErrorHandlerService,{ provide: ErrorHandler, useClass: GlobalErrorHandlerService }
 ],
   bootstrap: [AppComponent]
 })

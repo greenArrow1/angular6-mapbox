@@ -9,6 +9,7 @@ import {
 } from "@angular/common/http";
 import { Observable, of, throwError } from "rxjs";
 import { delay, mergeMap, materialize, dematerialize } from "rxjs/operators";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -25,7 +26,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       .pipe(
         mergeMap(() => {
           if (
-            request.url.endsWith("/api/tokenauthenticate") &&
+            request.url.endsWith(environment.apiurl + "/tokenauthenticate") &&
             request.method === "POST"
           ) {
             
@@ -45,7 +46,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           }
 
           if (
-            request.url.endsWith("/api/patroledetail") &&
+            request.url.endsWith(environment.apiurl + "/patroledetail") &&
             request.method === "GET"
           ) {
             if (request.headers.get("Authorization") === `Bearer ${sessionStorage.getItem("token")}`) {
@@ -56,7 +57,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
           }
           if (
-            request.url.endsWith("/api/feedback") &&
+            request.url.endsWith(environment.apiurl + "/feedback") &&
             request.method === "POST"
           ) {
             if (request.headers.get("Authorization") === `Bearer ${sessionStorage.getItem("token")}`) {
@@ -66,7 +67,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
           }
           if (
-            request.url.indexOf('/api/details')> -1 &&
+            request.url.indexOf(environment.apiurl + '/details')> -1 &&
             request.method === "GET"
           ) {
             if (request.headers.get("x-api-key") === patrolservice['token']) {
@@ -88,7 +89,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           }
 
           if (
-            request.url.indexOf('/api/location')> -1 &&
+            request.url.indexOf(environment.apiurl +'/location')> -1 &&
             request.method === "GET"
           ) {
             
@@ -168,7 +169,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
           }
           if (
-            request.url.includes("/api/location?key1=59777688?key2=9999") &&
+            request.url.includes(environment.apiurl +"/location?key1=59777688?key2=9999") &&
             request.method === "GET"
           ) {
             //let key1:any =request.url.split("?")[1].split("=")[0];

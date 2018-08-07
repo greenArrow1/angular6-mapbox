@@ -16,8 +16,9 @@ import { WindowRef } from '../../shared/services/window.service';
 import { LoggerService } from '../../shared/services/logger.service';
 import { Dialog } from './dialog/dialog.component';
 import { environment } from '../../../environments/environment';
+import { hmTouchEvents } from 'hammerjs';
 declare var turf: any; //importing turf library features in variable turf.
-
+declare var Hammer: any;
 export interface DialogData {
   animal: string;
   name: string;
@@ -58,7 +59,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
       }
     }]
   };
-
+  tapCounter = 0;
 
   /**
    * plotting route on map
@@ -91,7 +92,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
   estimatedDistance: number = 0;
   selectedPoint: boolean = false;
   options: any = {};
-  errorCounter:number =0;
+  errorCounter: number = 0;
   alert(message: string) {
     alert(message);
   }
@@ -149,7 +150,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
     private PolyLineService: PolyLineService,
     public ngZone: NgZone, changeDetectorRef: ChangeDetectorRef, public windowRef: WindowRef, public dialog: MatDialog) {
     this.changeDetectorRef = changeDetectorRef;
-
+    console.log(hmTouchEvents);
   }
 
   //  ngAfterViewInit() {
@@ -206,12 +207,12 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
     }); */
 
     //GET Details
-   /*  this.patrolservice.getDetails(JSON.parse(localStorage.getItem('patrolservice')).eventid).subscribe(success => {
-    }, error => { console.log(error) });
- */
+    /*  this.patrolservice.getDetails(JSON.parse(localStorage.getItem('patrolservice')).eventid).subscribe(success => {
+     }, error => { console.log(error) });
+  */
 
 
-    if (this.patrolservice.validateLink(this.activeRoute.snapshot.params.eventid,this.activeRoute.snapshot.params.truckid) == 1) {
+    if (this.patrolservice.validateLink(this.activeRoute.snapshot.params.eventid, this.activeRoute.snapshot.params.truckid) == 1) {
       this.storeToken();
       if (this.sourceLang == "" || !this.sourceLang) {
         this.options = {
@@ -232,8 +233,8 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
         /**
          * getting patrol vehicle location by source coordinates.
          */
-        this.req4 = this.patrolservice.getPatrolLocation(this.activeRoute.snapshot.params.eventid,this.activeRoute.snapshot.params.truckid).subscribe(pdata => {
-          
+        this.req4 = this.patrolservice.getPatrolLocation(this.activeRoute.snapshot.params.eventid, this.activeRoute.snapshot.params.truckid).subscribe(pdata => {
+
           this.options.coords.startLang = pdata.longitude;
           this.options.coords.startLat = pdata.latitude;
           this.zoom = [this.currentZoomLevel];
@@ -241,7 +242,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
           let coords: any[] = JSON.parse(localStorage.getItem('coords')) || [];
           this.center = [this.options.coords.endLang, this.options.coords.endLat];
 
-          this.bounds = [[this.options.coords.endLang,this.options.coords.endLat], [this.options.coords.startLang, this.options.coords.startLat]];
+          this.bounds = [[this.options.coords.endLang, this.options.coords.endLat], [this.options.coords.startLang, this.options.coords.startLat]];
 
           this.timerMarker = interval(6000, animationFrameScheduler).subscribe(() => {
             this.index++;
@@ -254,16 +255,16 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
             }
           });
         }, error => {
-          if(error.status == 500){
+          if (error.status == 500) {
             this.createRoutes(this.options.coords);
-           
+
           }
-          else if(error.status == 410 || error.status == 404){
+          else if (error.status == 410 || error.status == 404) {
             LoggerService.setError(error);
             this.router.navigate(["/home"]);
           }
         });
-      },error=>{
+      }, error => {
         LoggerService.setError(error);
         this.router.navigate(["/home"]);
       });
@@ -274,7 +275,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
    * the response comes with distance, duration ,etc of the route.
    * @param longLat has the object of source and desination coordinates.
    */
-  
+
   private createRoutes(longLat) {
     if (this.req) {
       this.req.unsubscribe();
@@ -328,31 +329,57 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
 
       if (this.req2) {
         this.req2.unsubscribe();
-      }
-      this.req2 = this.patrolservice.getPatrolLocation(this.activeRoute.snapshot.params.eventid,this.activeRoute.snapshot.params.truckid).subscribe(pdata => {
-        
+      } 
+      this.req2 = this.patrolservice.getPatrolLocation(this.activeRoute.snapshot.params.eventid, this.activeRoute.snapshot.params.truckid).subscribe(pdata => {
+        this.tapCounter++;
+        if (this.tapCounter == 1) {
+          var context = Object.assign(this);
+          var square = document.getElementById('map');
+
+          // Create a manager to manager the element
+          var manager = new Hammer.Manager(square);
+
+          // Create a recognizer
+          var DoubleTap = new Hammer.Tap({
+            event: 'doubletap',
+            taps: 2
+          });
+          
+          // Add the recognizer to the manager
+          manager.add(DoubleTap);
+
+          // Subscribe to desired event
+          manager.on('doubletap',  (e)=> {
+            this.pitch = 40;
+            // this.setOption('zoom','');
+            this.zoomOndblClick();
+           
+          });
+        }
         // add condition on status recieved;
         if (pdata.status == 'COMPLETE' || pdata.status == 'CANCELED') {
           this.endRoute();
-        } else if(pdata.status == 'REASSIGNED'){
-            ///------------To DO----------
+
+        } else if (pdata.status == 'REASSIGNED') {
+          ///------------To DO----------
         }
+
         this.options.coords.startLang = pdata.longitude;
         this.options.coords.startLat = pdata.latitude;
-        if(this.timerMarkerError){this.timerMarkerError.unsubscribe();}
+        if (this.timerMarkerError) { this.timerMarkerError.unsubscribe(); }
         //this.zoomToBounds();
         //this.createRoutes(this.options.coords);
-      },error=>{
+      }, error => {
         this.timerMarkerError = interval(30000, animationFrameScheduler).subscribe(() => {
           this.errorCounter++;
-          if(this.errorCounter>4){
+          if (this.errorCounter > 4) {
             this.openDialog();
             this.timerMarkerError.unsubscribe();
-          } else{
+          } else {
             this.createRoutes(this.options.coords);
           }
         });
-        
+
       });
     }, err => {
       console.log(err);
@@ -511,9 +538,11 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
 
   }
   private storeToken() {
-    sessionStorage.setItem("patrolservice", JSON.stringify({ "eventid": this.activeRoute.snapshot.params.eventid,
-    "truckid":this.activeRoute.snapshot.params.truckid, 
-    "token": environment.apiauthkey}));
+    sessionStorage.setItem("patrolservice", JSON.stringify({
+      "eventid": this.activeRoute.snapshot.params.eventid,
+      "truckid": this.activeRoute.snapshot.params.truckid,
+      "token": environment.apiauthkey
+    }));
   }
   onClick(detail: any) {
     this.selectedPoint = true;
@@ -544,12 +573,12 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this.timerMarker?this.timerMarker.unsubscribe():'';
-    this.req4?this.req4.unsubscribe():'';
-    this.req3?this.req3.unsubscribe():'';
+    this.timerMarker ? this.timerMarker.unsubscribe() : '';
+    this.req4 ? this.req4.unsubscribe() : '';
+    this.req3 ? this.req3.unsubscribe() : '';
     if (this.req2) { this.req2.unsubscribe(); }
 
-    if(this.req){this.req.unsubscribe();}
+    if (this.req) { this.req.unsubscribe(); }
   }
   ngAfterViewInit() {
     this.ngZone.runOutsideAngular(() => {
@@ -602,7 +631,13 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
       this.animal = result;
     });
   }
+  dblTap() {
+    const coordinates = this.data.features[0].geometry.coordinates;
+    this.bounds = coordinates.reduce((bounds, coord) => {
+      return bounds.extend(<any>coord);
+    }, new LngLatBounds(coordinates[0], coordinates[0]));
 
+  }
 
 }
 

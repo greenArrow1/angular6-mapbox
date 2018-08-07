@@ -37,8 +37,8 @@
     justify-content: center;
   }
   svg {
-    height: 30%;
-    width: 10%;
+    height: 12px;
+    width: 10px;
     fill: white;
 }
 .u-proxima-nova-xlarge, h3:not([class]) {

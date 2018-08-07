@@ -8,3 +8,10 @@
     color: white;
     text-align: center;
  }
+ /* .u-bg-grey-mid-light */
+ .error{
+    color:#64686A;
+    word-break:"break-word";
+    max-width: 80%;
+    text-align: center;
+ }

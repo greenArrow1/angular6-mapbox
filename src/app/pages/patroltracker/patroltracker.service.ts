@@ -54,7 +54,7 @@ export class PatrolTrackerService {
     } */
     getBreakDownDetails(eventid:any):Observable<any>{
         try{
-            return this.http.get(environment.apiurl+'/details?eventid='+eventid).pipe(catchError(this.handleError('getData')));
+            return this.http.get(environment.apiurl+'/details?key1='+eventid).pipe(catchError(this.handleError('getData')));
         }
         catch(error){
 
@@ -63,7 +63,7 @@ export class PatrolTrackerService {
     }
     getPatrolLocation(eventid,truckid):Observable<any>{
         try{
-            return this.http.get(environment.apiurl+'/location?eventid='+eventid+'?truckid='+truckid).pipe(catchError(this.handleError('getData')));
+            return this.http.get(environment.apiurl+'/locations?key1='+eventid+'&key2='+truckid).pipe(catchError(this.handleError('getData')));
         }
        catch(error){
 

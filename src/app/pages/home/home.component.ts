@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.css']
 })
 export class Home implements OnInit {
-  error:any;
+  errors:any;
   popupData:any ={};
   constructor(private injector: Injector) { }
 
@@ -22,7 +22,10 @@ export class Home implements OnInit {
 
     // let loggerService = this.injector.get(LoggerService);
     // let error = loggerService.getErrorList();
-   this.error = LoggerService.getErrorList();
+   this.errors = LoggerService.getErrorList();
+   /* if(this.errors.status == 0){
+     this.errors.message = 'Invalid Request';
+   } */
   }
   
 }

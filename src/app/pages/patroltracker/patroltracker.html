@@ -18,15 +18,16 @@
     </div> 
 </div>-->
 <section class="mapContent" *ngIf="!isLoading">
-    <mgl-map id="map" [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [centerWithPanTo]="true" [pitch]="pitch"
+    <mgl-map  id="map" [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [centerWithPanTo]="true" [pitch]="pitch"
         movingMethod="jumpTo" [fitBounds]="bounds" [fitBoundsOptions]="{
             padding: 50
           }" [doubleClickZoom]="false" (dblClick)="zoomOndblClick()" (load)="map = $event">
 
-        <mgl-marker id="dest" *ngIf="showMarker" [feature]="destfeature">
+        <mgl-marker hm-tap="dbTap" id="dest" *ngIf="showMarker" [feature]="destfeature">
             <!-- <div (click)="onClick(destfeature)" class="markersource" style="background-image: url(../assets/images/descmarker.png);">
             </div> -->
-            <img (click)="onClick(destfeature)" class="markersource" src="../../../assets/images/descmarker.png">
+            <!-- <img (click)="onClick(destfeature)" class="markersource" src="../../../assets/images/descmarker.png"> -->
+            <svg fill="#014280" id="icon-map-pin" (click)="onClick(destfeature)" class="markersource" viewBox="0 0 30 45" width="100%" height="100%"><path class="fwst0" d="M15 0C6.7 0 0 6.7 0 15c0 8 13.6 28.7 14.2 29.6.2.3.5.4.8.4s.6-.2.8-.4C16.4 43.7 30 23 30 15c0-8.3-6.7-15-15-15zm0 21.6c-3.6 0-6.6-2.9-6.6-6.6s2.9-6.6 6.6-6.6 6.6 2.9 6.6 6.6-3 6.6-6.6 6.6z"></path></svg>
 
         </mgl-marker>
         <mgl-popup *ngIf="selectedPoint" [lngLat]="destfeature.geometry?.coordinates" [closeOnClick]="false" (close)="popupClose()">
@@ -85,7 +86,7 @@
         </span>
     </div>
     <div class="estimate" fxLayout="row" fxLayoutAlign="center center" fxFlex="20">
-        <strong> {{estimatedTime}} min</strong>
+        <strong> {{estimatedTime}}{{pitch}} min</strong>
     </div>
     
 </div>

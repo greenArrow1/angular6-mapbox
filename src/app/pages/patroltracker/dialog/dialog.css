@@ -5,4 +5,8 @@ div{
 }
 strong{
     font-size: larger;
+    text-align: center;
+}
+.mat-dialog-title {
+    font: 700 20px/32px Roboto,"Helvetica Neue",sans-serif;
 }
