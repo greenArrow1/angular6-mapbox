@@ -334,7 +334,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
         this.tapCounter++;
         if (this.tapCounter == 1) {
           var context = Object.assign(this);
-          var square = document.getElementById('map');
+          var square = document.getElementById('mapper');
 
           // Create a manager to manager the element
           var manager = new Hammer.Manager(square);
@@ -349,7 +349,14 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
           manager.add(DoubleTap);
 
           // Subscribe to desired event
-          manager.on('doubletap',  this.zoomOndblClick());
+          manager.on('doubletap',  (e)=> {
+            this.pitch = 40;
+            // this.setOption('zoom','');
+            this.zoomOndblClick();
+            alert("tapped");
+
+           
+          });
         }
         // add condition on status recieved;
         if (pdata.status == 'COMPLETE' || pdata.status == 'CANCELED') {

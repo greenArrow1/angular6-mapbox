@@ -17,7 +17,7 @@
             <button mat-mini-fab color="primary" (click)="getRoute()">OK</button>
     </div> 
 </div>-->
-<section class="mapContent" *ngIf="!isLoading">
+<section id="mapper" class="mapContent" *ngIf="!isLoading">
     <mgl-map  id="map" [style]="'mapbox://styles/mapbox/light-v9'" [zoom]="zoom" [center]="center" [centerWithPanTo]="true" [pitch]="pitch"
         movingMethod="jumpTo" [fitBounds]="bounds" [fitBoundsOptions]="{
             padding: 50
@@ -86,7 +86,7 @@
         </span>
     </div>
     <div class="estimate" fxLayout="row" fxLayoutAlign="center center" fxFlex="20">
-        <strong> {{estimatedTime}}{{currentZoomLevel}} min</strong>
+        <strong> {{estimatedTime}} min</strong>
     </div>
     
 </div>
