@@ -349,12 +349,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
           manager.add(DoubleTap);
 
           // Subscribe to desired event
-          manager.on('doubletap',  (e)=> {
-            this.pitch = 40;
-            // this.setOption('zoom','');
-            this.zoomOndblClick();
-           
-          });
+          manager.on('doubletap',  this.zoomOndblClick());
         }
         // add condition on status recieved;
         if (pdata.status == 'COMPLETE' || pdata.status == 'CANCELED') {
@@ -632,11 +627,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
     });
   }
   dblTap() {
-    const coordinates = this.data.features[0].geometry.coordinates;
-    this.bounds = coordinates.reduce((bounds, coord) => {
-      return bounds.extend(<any>coord);
-    }, new LngLatBounds(coordinates[0], coordinates[0]));
-
+   
   }
 
 }
