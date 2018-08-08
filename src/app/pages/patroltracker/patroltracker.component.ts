@@ -335,10 +335,11 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
          this.tapCounter++;
         if (this.tapCounter == 1) {
           var context = Object.assign(this);
-          var square = document.getElementsByClassName('mapboxgl-ctrl-icon mapboxgl-ctrl-compass');
+         // var square = document.getElementsByClassName('mapboxgl-ctrl-icon mapboxgl-ctrl-compass');
+         var square = document.getElementById('mapper');
           debugger
           // Create a manager to manager the element
-          var manager = new Hammer.Manager(square[0]);
+          var manager = new Hammer.Manager(square);
 
           // Create a recognizer
           // var DoubleTap = new Hammer.Tap({
@@ -346,7 +347,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
           // });
           var DoubleTap = new Hammer.Tap({
             event: "tap",
-            taps: 1,
+            taps: 2,
             pointerType: Hammer.POINTER_TOUCH
         });
 
@@ -359,6 +360,13 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
             square[0].addEventListener("click", ()=>{
               this.zoomOndblClick();
           });
+
+          var square1 = document.getElementById('mapper');
+            square1.addEventListener("click", ()=>{
+              this.zoomOndblClick();
+          });
+
+
               this.pitch = 30;
            /*   
             
