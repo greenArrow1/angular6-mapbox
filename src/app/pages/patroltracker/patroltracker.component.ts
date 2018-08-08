@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { LngLatLike, LngLatBounds, Map } from 'mapbox-gl';
 import { HttpClient } from '@angular/common/http';
 import { MatBottomSheet, ICON_REGISTRY_PROVIDER_FACTORY, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
@@ -60,7 +60,8 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
     }]
   };
   tapCounter = 0;
-
+  eventCounter:any;
+  clickEvent = new EventEmitter<Event>();
   /**
    * plotting route on map
    */
@@ -329,35 +330,48 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
 
       if (this.req2) {
         this.req2.unsubscribe();
-      } 
+      }
       this.req2 = this.patrolservice.getPatrolLocation(this.activeRoute.snapshot.params.eventid, this.activeRoute.snapshot.params.truckid).subscribe(pdata => {
-        this.tapCounter++;
+         this.tapCounter++;
         if (this.tapCounter == 1) {
           var context = Object.assign(this);
-          var square = document.getElementById('mapper');
-
+          var square = document.getElementsByClassName('mapboxgl-ctrl-icon mapboxgl-ctrl-compass');
+          debugger
           // Create a manager to manager the element
-          var manager = new Hammer.Manager(square);
+          var manager = new Hammer.Manager(square[0]);
 
           // Create a recognizer
+          // var DoubleTap = new Hammer.Tap({
+          //   event: 'click'
+          // });
           var DoubleTap = new Hammer.Tap({
-            event: 'doubletap',
-            taps: 2
-          });
-          
+            event: "tap",
+            taps: 1,
+            pointerType: Hammer.POINTER_TOUCH
+        });
+
           // Add the recognizer to the manager
           manager.add(DoubleTap);
 
           // Subscribe to desired event
-          manager.on('doubletap',  (e)=> {
-            this.pitch = 40;
-            // this.setOption('zoom','');
-            this.zoomOndblClick();
-            alert("tapped");
-
-           
+          manager.on('tap', (e) => {
+            var square = document.getElementsByClassName('mapboxgl-ctrl-icon mapboxgl-ctrl-compass');
+            square[0].addEventListener("click", ()=>{
+              this.zoomOndblClick();
           });
-        }
+              this.pitch = 30;
+           /*   
+            
+                const coordinates = this.data.features[0].geometry.coordinates;
+               this.bounds = coordinates.reduce((bounds, coord) => {
+                 return bounds.extend(<any>coord);
+               }, new LngLatBounds(coordinates[0], coordinates[0]));
+               this.zoomOndblClick();
+            // debugger
+            this.clickEvent.emit(e); */
+          });
+          
+        }  
         // add condition on status recieved;
         if (pdata.status == 'COMPLETE' || pdata.status == 'CANCELED') {
           this.endRoute();
@@ -394,10 +408,18 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
    * to fit map around the given marker(s) coordinates .
    */
   zoomToBounds() {
-    const coordinates = this.data.features[0].geometry.coordinates;
+    //this.ngZone.runOutsideAngular(() => {
+     const coordinates = this.data.features[0].geometry.coordinates;
     this.bounds = coordinates.reduce((bounds, coord) => {
       return bounds.extend(<any>coord);
     }, new LngLatBounds(coordinates[0], coordinates[0]));
+  //});
+    //
+    //   if( this.map){
+    //     this.map.fitBounds(this.bounds);
+    //   }
+     
+    // });
   }
   /**
    * check for various options provided in settings.
@@ -608,13 +630,16 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
     // var zoomLevel = this.map.getZoom();
     // if(zoomLevel>0){
     //   zoomLevel--;
-    //   this.ngZone.runOutsideAngular(() => {
-    //     this.map.setZoom(zoomLevel);
-    //   });
+      // this.ngZone.runOutsideAngular(() => {
+      //   this.map.setZoom(this.currentZoomLevel);
+      //   this.map.fitBounds(this.bounds);
+      // });
     // }
     //this.elRef.nativeElement.querySelector('.mapboxgl-ctrl-zoom-out').click();
+    
     this.zoomToBounds();
-
+    
+   
   }
   hideChildWindow(status) {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
@@ -633,9 +658,32 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
       this.animal = result;
     });
   }
-  dblTap() {
+  // touchStart(event){
+  //   var time1 = new Date();
+  //  debugger
+  // }
+  // touchEnd(event) {
+  //   debugger
+  // }
+  tapped(event){
    
-  }
+    console.log(event.timeStamp);
+    console.log(event.lngLat);
+    if(this.eventCounter){
+    if( this.eventCounter - event.originalEvent.timeStamp < 300) {
+      this.zoomOndblClick;
+      this.eventCounter=undefined;
+    }
+    else{
+      return
+    }
+    }
+    else this.eventCounter = event.originalEvent.timeStamp;
+   
 
+  }
+  abc(event){
+    console.log(event.lngLat);
+  }
 }
 

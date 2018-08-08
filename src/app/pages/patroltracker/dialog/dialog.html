@@ -1,13 +1,17 @@
-<mat-icon style="color: red;display:inline;vertical-align: middle;">warning</mat-icon><strong mat-dialog-title style="display:inline;vertical-align: middle;">Tracking service is down</strong>
+<div mat-dialog-actions style="float:right">
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>
+    <svg viewBox="-200 -200 500 500" id="icon-cross-thin" width="2%" height="2%">
+      <path d="M269-200c9 0 16.5 3 22.5 9 5.5 6 8.5 13.5 8.5 22 0 9-3 16-9 22L94 50l197 196.5c6 6 9 13.5 9 22 0 9-3 16.5-9 22.5s-13.5 9-22.5 9-16-3-22-9L50 94l-196.5 197c-6 6-13.5 9-22.5 9s-16.5-3-22.5-9c-5.5-6-8.5-13.5-8.5-22 0-9 3-16 9-22L6 50l-197-196.5c-6-6-9-13.5-9-22.5 0-8.5 3-16 9-22s13.5-9 22-9c9 0 16.5 3 22.5 9L50 6l196.5-197c6-6 13.5-9 22.5-9z"></path>
+    </svg>
+  </button>
+</div>
+<mat-icon style="color: red;display:inline;vertical-align: middle;">warning</mat-icon>
+<strong mat-dialog-title style="display:inline;vertical-align: middle;">Tracking service is down</strong>
+
 <div mat-dialog-content>
   <p>An error has occurred and we were unable to track your patrol van.
   </p>
   <p>
-      The van is still on its way.Please try again in a few minutes.
+    The van is still on its way.Please try again in a few minutes.
   </p>
-  
-</div>
-<div mat-dialog-actions style="float:right">
- 
-  <button  mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
 </div>
