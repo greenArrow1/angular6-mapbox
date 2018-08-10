@@ -1,26 +1,20 @@
 <div class="content2" fxLayout="row" fxLayoutAlign="center stretch" [@myAnimation]>
-  <mat-card class="feedback-card">
+  <mat-card class="feedback-card" style="height: 100%;overflow: scroll;">
     <mat-card-header>
     </mat-card-header>
     
     <mat-card-content>
       <div>
-        You have requested for a RACV Patrol van to arrive at:
+        You have requested for the RACV service provider to arrive at the following location:
         <br>
         <br>
         <div class="u-proxima-nova-xlarge" fxLayout="column" fxLayoutAlign="space-evenly center">
           485, Bourke Street, Melbourne</div>
         <br>
-
-        <br>
-        <div class="u-xsmall-caps">Your estimated time to arrival is calculated based on various traffic statistics, and may vary based on real-time
-          traffic.
+        <div class="u-xsmall-caps">Your estimated time to arrival calculated based on various traffic statistics, and may vary based on real time traffic. 
         </div>
       </div>
-    
-    </mat-card-content>
-      
-    <div class="faqHeader" fxLayout="column" fxLayoutAlign="space-evenly center">
+      <div class="faqHeader" fxLayout="column" fxLayoutAlign="space-evenly center">
         <strong>Roadside Assist FAQs</strong>
       </div>
       <div class="faqHeader" fxLayout="column" fxLayoutAlign="space-evenly center">
@@ -48,7 +42,8 @@
                    
                   </mat-panel-description>
                 </mat-expansion-panel-header>
-                <p>The breakdown location is usually accurate, but on occasions it can be an estimate based on the information you have provided. Please wait until your RACV Patrol arrives in the area to assist you further.</p>
+                <p>If you think that the address is incorrect, please contact us on <a id="jcr:content_hero_link" href="tel:131111" (click)="phoneCLickAnalysis()" title="13 11 11" target="_self">13 11 11
+                </a> to update your location.</p>
               </mat-expansion-panel>
               <mat-expansion-panel (opened)="panelOpenState = true"
                                    (closed)="panelOpenState = false">
@@ -77,6 +72,9 @@
             </mat-accordion>
             
         </div>
+    </mat-card-content>
+      
+    
   </mat-card>
 </div>
 <!-- <div class="footer" fxLayout="column" fxLayoutAlign="center center" (click)="goBack($event)">

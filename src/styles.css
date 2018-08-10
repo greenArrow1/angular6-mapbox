@@ -96,3 +96,12 @@ body {
   width: 400px !important;
   position: static;
 }
+.mat-expansion-indicator::after, .mat-expansion-panel-header-description {
+  color: #009bde;
+}
+mat-expansion-panel-header{
+  border-bottom: 1px solid rgb(0, 155, 222);
+}
+.mat-expansion-panel-body {
+  padding: 0 10px 0 10px;
+}

@@ -16,7 +16,7 @@ import { WindowRef } from '../../shared/services/window.service';
 import { LoggerService } from '../../shared/services/logger.service';
 import { Dialog } from './dialog/dialog.component';
 import { environment } from '../../../environments/environment';
-import { hmTouchEvents } from 'hammerjs';
+//import { hmTouchEvents } from 'hammerjs';
 declare var turf: any; //importing turf library features in variable turf.
 declare var Hammer: any;
 export interface DialogData {
@@ -151,7 +151,7 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
     private PolyLineService: PolyLineService,
     public ngZone: NgZone, changeDetectorRef: ChangeDetectorRef, public windowRef: WindowRef, public dialog: MatDialog) {
     this.changeDetectorRef = changeDetectorRef;
-    console.log(hmTouchEvents);
+    //console.log(hmTouchEvents);
   }
 
   //  ngAfterViewInit() {
@@ -350,9 +350,15 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
             taps: 2,
             pointerType: Hammer.POINTER_TOUCH
         });
+      //   var Tap = new Hammer.Tap({
+      //     event: "tap",
+      //     taps: 1,
+      //     pointerType: Hammer.POINTER_TOUCH
+      // });
 
           // Add the recognizer to the manager
           manager.add(DoubleTap);
+          //manager.add(Tap);
 
           // Subscribe to desired event
           manager.on('tap', (e) => {
@@ -361,10 +367,10 @@ export class PatrolTrackerComponent implements OnInit, OnDestroy {
               this.zoomOndblClick();
           });
 
-          var square1 = document.getElementById('mapper');
-            square1.addEventListener("click", ()=>{
-              this.zoomOndblClick();
-          });
+          // var square1 = document.getElementById('mapper');
+          //   square1.addEventListener("click", ()=>{
+          //     this.zoomOndblClick();
+          // });
 
 
               this.pitch = 30;

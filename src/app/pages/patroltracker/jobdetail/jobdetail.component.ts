@@ -1,8 +1,9 @@
-import { Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, EventEmitter, NgZone} from '@angular/core';
 // import { MatBottomSheetRef } from '@angular/material';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import {slideInOutAnimation} from '../../../shared/components/animation/slide-in-out.component';
 import { trigger, state, animate, transition, style } from '@angular/animations';
+import { WindowRef } from '../../../shared/services/window.service';
 @Component({
   selector: 'app-jobdetail',
   templateUrl: './jobdetail.component.html',
@@ -52,7 +53,7 @@ export class JobdetailComponent {
   panelOpenState = false;
   @Output() closeChildWindow = new EventEmitter<boolean>();
   
-  constructor(/*private bottomSheetRef: MatBottomSheetRef<JobdetailComponent>*/) { }
+  constructor(/*private bottomSheetRef: MatBottomSheetRef<JobdetailComponent>*/ private ngZone:NgZone, public windowRef: WindowRef) { }
   /**
    * close bottom-sheet and go back to patroltracker page.
    * @param event mouse event
@@ -69,5 +70,19 @@ export class JobdetailComponent {
    this.transition = 'leave';
    this.closeChildWindow.emit(false);
  }
+ phoneCLickAnalysis() {
+  this.ngZone.runOutsideAngular(() => {
+    this.windowRef.nativeWindow.digitalData = {
+      page: {
+        pageName: "pages/patroltracker", // set page name 
+        siteSection: "relaxed-meninsky-dd0ec4.netlify ", // set domain/sub-domain name
+        server: "relaxed-meninsky-dd0ec4.netlify.com" // set domain/sub-domain name
+      },
+    };
+    this.windowRef.nativeWindow._satellite.pageBottom();
+    //console.log("adobe" + window._satellite.pageBottom());
+    //this.$carousel = $(this.el.nativeElement).slick({});
+  });
+}
 
 }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  accessTokenMapbox: 'pk.eyJ1IjoiY2hpdHRyYW5nIiwiYSI6ImNqanA3dHA5NTd3MjEzcGxmdDV0Njc4NXQifQ.NapWZkvR3_lYOqXQkZg99A',//'pk.eyJ1Ijoid3lra3NzIiwiYSI6ImNqMjR6aTdmdzAwNHMzMnBvbjBucjlqNm8ifQ.6GjGpofWBVaIuSnhdXQb5w',
+  accessTokenMapbox: 'pk.eyJ1IjoiY2hpdHRyYW5nIiwiYSI6ImNqa25wdTFkdDI0M2czcXAwZXMwd3BtcGMifQ.N16-ZHDLbfuI4M2gkqoZoQ', //'pk.eyJ1IjoiY2hpdHRyYW5nIiwiYSI6ImNqanA3dHA5NTd3MjEzcGxmdDV0Njc4NXQifQ.NapWZkvR3_lYOqXQkZg99A',//'pk.eyJ1Ijoid3lra3NzIiwiYSI6ImNqMjR6aTdmdzAwNHMzMnBvbjBucjlqNm8ifQ.6GjGpofWBVaIuSnhdXQb5w',
   directionsURL : 'https://api.mapbox.com/directions/v5/mapbox/driving-traffic/',
   apiurl:'/api',   //''https://ru5aqr8de8.execute-api.ap-southeast-2.amazonaws.com/Stage'',
   apiauthkey:'12345678901234567890',
